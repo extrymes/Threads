@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
+import { AuthProvider } from "./Providers";
 
 export const metadata: Metadata = {
   title: "Threads",
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-threads-gray">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <ToastContainer position="bottom-right" />
       </body>
     </html>

@@ -44,3 +44,14 @@
 .user-button {
   @apply border border-threads-gray-light rounded-xl py-3 w-full text-center hover:bg-threads-gray-light duration-150 cursor-pointer mt-3;
 }
+
+/* Dropdown menu */
+.dropdown-menu {
+  @apply absolute right-0 z-10 mt-2 origin-top-right w-48 rounded-lg text-white bg-threads-modal;
+  ul {
+    @apply p-2
+  }
+  li {
+    @apply px-2 py-2 flex items-center hover:bg-threads-gray-light active:bg-opacity-80 rounded-md cursor-pointer;
+  }
+}

@@ -4,7 +4,7 @@
 
 /* Form  */
 .input {
-  @apply bg-threads-gray-dark block w-full mt-3 text-white rounded-xl p-5 placeholder:text-threads-gray-light focus:outline-double focus:outline-white;
+  @apply bg-threads-gray-dark block w-full mt-3 resize-none text-white rounded-xl p-5 placeholder:text-threads-gray-light focus:outline-double focus:outline-white;
 }
 .label {
   @apply font-bold text-white text-base;

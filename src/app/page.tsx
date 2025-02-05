@@ -1,8 +1,12 @@
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
+import NewPostForm from "@/components/NewPostForm/NewPostForm";
 import Post from "@/components/Post/Post";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
-export default function Index() {
+export default async function Index() {
   // Variables
+  const session = await getServerSession(authOptions);
   const posts = [
     {
       _id: "1",
@@ -22,6 +26,11 @@ export default function Index() {
     <ConnectedLayout>
       <div className="md:w-[800px] w-full mx-auto mt-10">
         {/* New post */}
+        {session?.user && (
+          <div className="border-b border-threads-gray-dark py-4">
+            <NewPostForm />
+          </div>
+        )}
 
         {/* Posts */}
         <div className="flex flex-col gap-4">

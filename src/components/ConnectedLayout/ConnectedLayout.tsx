@@ -3,7 +3,7 @@
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Button from "../Button/Button";
 import Dropwdown from "../Dropdown/Dropwdown";
@@ -16,7 +16,6 @@ export default function ConnectedLayout({
 }) {
   // Variables
   const pathname = usePathname();
-  const router = useRouter();
   const { data: session } = useSession();
   const [dropdownIsOpen, dropdownSetIsOpen] = useState(false);
 

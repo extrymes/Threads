@@ -10,10 +10,10 @@ export default function Login() {
 
       <div className="mt-5 w-[500px] mx-auto flex flex-col gap-4">
         {/* Sign up and sign in */}
-        <Link href="/login/signup">
+        <Link href="/login/signin">
           <div className="auth-method">
             <h2 className="font-bold text-white">
-              Sign up or sign in with an email address
+              Sign in with an email address or create an account
             </h2>
             <div className="text-threads-gray-light mt-4">
               Sign in or create your Threads profile with an email address. This

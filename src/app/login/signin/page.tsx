@@ -25,7 +25,7 @@ export default function Signin() {
       toast.error("Please enter a valid email!");
       return;
     }
-    // Sign in user
+    // Try to sign in user
     const res = await signIn("credentials", {
       email,
       password,
@@ -35,8 +35,8 @@ export default function Signin() {
       toast.error(res.error);
       return;
     }
-    // Redirect user to home page
     toast.success("You are logged in!");
+    // Redirect user to home page
     router.replace("/");
   };
 
@@ -89,10 +89,7 @@ export default function Signin() {
       {/* Sign up */}
       <div className="flex justify-center mt-3 gap-2 text-threads-gray-light">
         <p>Don't have an account?</p>
-        <Link
-          href="/login/signup"
-          className="underline hover:opacity-80"
-        >
+        <Link href="/login/signup" className="underline hover:opacity-80">
           Create account
         </Link>
       </div>

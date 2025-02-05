@@ -102,10 +102,7 @@ export default function Signup() {
       {/* Sign in */}
       <div className="flex justify-center mt-3 gap-2 text-threads-gray-light">
         <p>Already an account?</p>
-        <Link
-          href="/login/signin"
-          className="underline hover:opacity-80"
-        >
+        <Link href="/login/signin" className="underline hover:opacity-80">
           Sign in
         </Link>
       </div>

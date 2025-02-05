@@ -11,9 +11,8 @@ export default function Search() {
   useEffect(() => {
     // Focus input when typing
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.length == 1 && document.activeElement != inputRef.current) {
+      if (e.key.length == 1 && document.activeElement != inputRef.current)
         inputRef.current?.focus();
-      }
     };
 
     // Add event listeners on mounting

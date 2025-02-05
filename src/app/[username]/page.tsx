@@ -14,13 +14,13 @@ export default function Profile() {
       _id: "1",
       content: "Welcome to Threads!",
       username: "John Doe",
-      profile: "/picture.png",
+      profile: "/avatar.jpg",
     },
     {
       _id: "2",
       content: "Hello World!",
       username: "Maxime Rochedy",
-      profile: "/picture.png",
+      profile: "/avatar.jpg",
     },
   ];
 
@@ -44,7 +44,7 @@ export default function Profile() {
           {/* Avatar */}
           <div>
             <Image
-              src="/picture.png"
+              src="/avatar.jpg"
               alt="User"
               width={100}
               height={100}

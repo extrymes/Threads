@@ -2,20 +2,22 @@ import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
 import Post from "@/components/Post/Post";
 
 export default function Index() {
+  // Variables
   const posts = [
     {
       _id: "1",
       content: "Welcome to Threads!",
       username: "John Doe",
-      profile: "/picture.png",
+      profile: "/avatar.jpg",
     },
     {
       _id: "2",
       content: "Hello World!",
       username: "Maxime Park",
-      profile: "/picture.png",
+      profile: "/avatar.jpg",
     },
   ];
+
   return (
     <ConnectedLayout>
       <div className="md:w-[800px] w-full mx-auto mt-10">

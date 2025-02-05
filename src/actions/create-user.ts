@@ -36,7 +36,7 @@ export const createUser = async (
     username,
     email,
     password: encryptedPassword,
-    profile: "/picture.png",
+    profile: "/avatar.jpg",
     bio: "-",
     url: "",
     creation: new Date(),

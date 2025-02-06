@@ -1,28 +1,48 @@
 "use client";
 
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
-import Post from "@/components/Post/Post";
+import PostLayout from "@/components/PostLayout/PostLayout";
+import { Post } from "@/types/Post";
+import { User } from "@/types/User";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Profile() {
   // Variables
   const params = useParams();
   const username = params.username?.slice(3);
-  const posts = [
-    {
-      _id: "1",
-      content: "Welcome to Threads!",
-      username: "John Doe",
-      profile: "/avatar.jpg",
-    },
-    {
-      _id: "2",
-      content: "Hello World!",
-      username: "Maxime Rochedy",
-      profile: "/avatar.jpg",
-    },
-  ];
+
+  // States
+  const [user, setUser] = useState<User | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  // Effect
+  useEffect(() => {
+    // Check if username exists
+    if (!username) notFound();
+    // Fetch user data and posts
+    fetchUserDataPosts();
+  }, []);
+
+  // Functions
+  const fetchUserDataPosts = async () => {
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    });
+    if (!response.ok) {
+      toast.error("Error occured when trying to fetch user posts");
+      return;
+    }
+    const data = await response.json();
+    setUser(data.user);
+    setPosts(data.posts);
+  };
 
   return (
     <ConnectedLayout>
@@ -31,20 +51,24 @@ export default function Profile() {
         <div className="flex justify-between gap-4">
           {/* Data */}
           <div>
-            <h1 className="text-3xl font-semibold">{username}</h1>
-            <div className="text-threads-gray-light mt-2">@{username}</div>
-            <div className="mt-5 whitespace-pre-line">-</div>
-            <div className="mt-5 text-blue-500 hover:text-blue-400 duration-150">
-              <a href="https://42.fr" target="_blank">
-                42.fr
-              </a>
+            <h1 className="text-3xl font-semibold">{user?.name}</h1>
+            <div className="text-threads-gray-light mt-2">
+              @{user?.username || "unknown"}
             </div>
+            <div className="mt-5 whitespace-pre-line">{user?.bio}</div>
+            {user?.url && (
+              <div className="mt-5 text-blue-500 hover:text-blue-400 duration-150">
+                <a href={user?.url} target="_blank">
+                  {user?.url}
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Avatar */}
           <div>
             <Image
-              src="/avatar.jpg"
+              src={user?.profile || "/avatar.jpg"}
               alt="User"
               width={100}
               height={100}
@@ -73,9 +97,9 @@ export default function Profile() {
 
         {/* Posts */}
         <div className="flex flex-col gap-4">
-          {posts.map((post) => (
+          {posts.map((post: Post) => (
             <div key={post._id}>
-              <Post post={post} />
+              <PostLayout post={post} />
             </div>
           ))}
         </div>

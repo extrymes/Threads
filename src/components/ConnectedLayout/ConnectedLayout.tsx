@@ -4,10 +4,12 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Button from "../Button/Button";
 import Dropwdown from "../Dropdown/Dropwdown";
 import Footer from "../Footer/Footer";
+import NewPostForm from "../NewPostForm/NewPostForm";
 
 export default function ConnectedLayout({
   children,
@@ -15,12 +17,38 @@ export default function ConnectedLayout({
   children: React.ReactNode;
 }) {
   // Variables
-  const pathname = usePathname();
   const { data: session } = useSession();
-  const [dropdownIsOpen, dropdownSetIsOpen] = useState(false);
+  const pathname = usePathname();
 
+  // State management
+  const [openModal, setOpenModal] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  // Side effects
+  useEffect(() => {
+    if (openModal) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+  }, [openModal]);
+
+  // Render
   return (
     <section className="flex flex-col min-h-screen px-5">
+      {openModal &&
+        createPortal(
+          <div
+            className="modal-background"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setOpenModal(false);
+              }
+            }}
+          >
+            <div className="modal-foreground">
+              <NewPostForm closeModal={() => setOpenModal(false)} />
+            </div>
+          </div>,
+          document.body
+        )}
       {/* Header */}
       <header className="flex justify-between items-center py-4">
         {/* Nav */}
@@ -60,6 +88,23 @@ export default function ConnectedLayout({
               ></path>
             </svg>
           </Link>
+
+          {/* Create */}
+          {session?.user && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-10 h-10 hover:w-11 hover:h-11 hover:bg-threads-gray-dark duration-150 p-1 rounded-xl text-threads-gray-light cursor-pointer"
+              width="1em"
+              height="1em"
+              viewBox="0 0 256 256"
+              onClick={() => setOpenModal(true)}
+            >
+              <path
+                fill="currentColor"
+                d="m232.49 55.51l-32-32a12 12 0 0 0-17 0l-96 96A12 12 0 0 0 84 128v32a12 12 0 0 0 12 12h32a12 12 0 0 0 8.49-3.51l96-96a12 12 0 0 0 0-16.98M192 49l15 15l-11 11l-15-15Zm-69 99h-15v-15l56-56l15 15Zm105-7.43V208a20 20 0 0 1-20 20H48a20 20 0 0 1-20-20V48a20 20 0 0 1 20-20h67.43a12 12 0 0 1 0 24H52v152h152v-63.43a12 12 0 0 1 24 0"
+              ></path>
+            </svg>
+          )}
         </nav>
 
         {/* Logo */}
@@ -70,7 +115,7 @@ export default function ConnectedLayout({
           {session?.user ? (
             // User avatar
             <Image
-              onClick={() => dropdownSetIsOpen(!dropdownIsOpen)}
+              onClick={() => setOpenDropdown(!openDropdown)}
               src={session.user.profile}
               alt="Profile"
               width={60}
@@ -85,7 +130,10 @@ export default function ConnectedLayout({
           )}
 
           {/* Dropdown menu */}
-          <Dropwdown isOpen={dropdownIsOpen} setIsOpen={dropdownSetIsOpen}>
+          <Dropwdown
+            openDropdown={openDropdown}
+            setDropdownOpen={setOpenDropdown}
+          >
             {/* My profile option */}
             <Link href={`/@${session?.user.username}`}>
               <li>

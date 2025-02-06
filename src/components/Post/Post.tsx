@@ -1,10 +1,17 @@
+import moment from "moment-timezone";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Post({
   post,
 }: {
-  post: { _id: string; content: string; username: string; profile: string };
+  post: {
+    _id: string;
+    content: string;
+    username: string;
+    profile: string;
+    creation: Date;
+  };
 }) {
   return (
     <div className="post">
@@ -26,7 +33,12 @@ export default function Post({
           <Link href={`/@${post.username}`}>
             <b>{post.username}</b>
           </Link>
-          <div className="text-sm text-threads-gray-light">About 1 hour</div>
+          <div className="text-sm text-threads-gray-light">
+            {moment
+              .utc(post.creation, "YYYY-MM-DD HH:mm:ss")
+              .tz("Europe/Paris")
+              .fromNow()}
+          </div>
         </div>
 
         {/* Text */}

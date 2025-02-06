@@ -2,17 +2,19 @@ import { useEffect, useRef } from "react";
 
 export default function Dropwdown({
   children,
-  isOpen,
-  setIsOpen,
+  openDropdown,
+  setOpenDropdown,
+  className,
 }: {
   children: React.ReactNode;
-  isOpen: boolean;
-  setIsOpen: (state: boolean) => void;
+  openDropdown: boolean;
+  setOpenDropdown: (state: boolean) => void;
+  className?: string;
 }) {
   // Variables
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // Functions
+  // Side effects
   useEffect(() => {
     // Handle click outside
     const handleMouseDown = (event: MouseEvent) => {
@@ -20,13 +22,13 @@ export default function Dropwdown({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        setOpenDropdown(false);
       }
     };
 
     // Handle escape key
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
+      if (event.key === "Escape") setOpenDropdown(false);
     };
 
     // Add event listeners on mounting
@@ -40,8 +42,9 @@ export default function Dropwdown({
     };
   }, []);
 
-  return isOpen ? (
-    <div className="dropdown-menu" ref={dropdownRef}>
+  // Render
+  return openDropdown ? (
+    <div className={`dropdown-menu ${className}`} ref={dropdownRef}>
       <ul>{children}</ul>
     </div>
   ) : null;

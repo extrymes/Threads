@@ -7,12 +7,16 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../Button/Button";
 
-export default function NewPostForm() {
+export default function NewPostForm({
+  closeModal,
+}: {
+  closeModal?: () => void;
+}) {
   // Variables
   const { data: session } = useSession();
   const maxLength = 200;
 
-  // States
+  // State management
   const [content, setContent] = useState("");
 
   // Functions
@@ -35,10 +39,12 @@ export default function NewPostForm() {
       return;
     }
     toast.success("Post created!");
-    // Reset content
+    // Reset content and close modal
     setContent("");
+    if (closeModal) closeModal();
   };
 
+  // Render
   return (
     <form action={prepareCreatePost}>
       {/* Content */}
@@ -76,7 +82,10 @@ export default function NewPostForm() {
 
         {/* Post button */}
         <div>
-          <Button formButton disabled={content.length == 0 || content.length > maxLength}>
+          <Button
+            formButton
+            disabled={content.length == 0 || content.length > maxLength}
+          >
             Post
           </Button>
         </div>

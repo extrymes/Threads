@@ -1,6 +1,6 @@
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
 import NewPostForm from "@/components/NewPostForm/NewPostForm";
-import Post from "@/components/Post/Post";
+import PostLayout from "@/components/PostLayout/PostLayout";
 import { MongoClient } from "mongodb";
 import { getServerSession } from "next-auth";
 import { toast } from "react-toastify";
@@ -51,7 +51,7 @@ export default async function Index() {
           {posts.length > 0 ? (
             posts.map((post) => (
               <div key={post._id}>
-                <Post post={post} />
+                <PostLayout post={post} />
               </div>
             ))
           ) : (

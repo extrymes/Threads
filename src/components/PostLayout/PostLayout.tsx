@@ -1,18 +1,9 @@
+import { Post } from "@/types/Post";
 import moment from "moment-timezone";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Post({
-  post,
-}: {
-  post: {
-    _id: string;
-    content: string;
-    username: string;
-    profile: string;
-    creation: Date;
-  };
-}) {
+export default function PostLayout({ post }: { post: Post }) {
   return (
     <div className="post">
       {/* Avatar */}

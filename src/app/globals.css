@@ -47,11 +47,18 @@
 
 /* Dropdown menu */
 .dropdown-menu {
-  @apply absolute right-0 z-10 mt-2 origin-top-right w-48 rounded-lg text-white bg-threads-modal;
+  @apply absolute z-10 w-48 rounded-lg text-white text-sm font-bold bg-threads-modal;
   ul {
-    @apply p-2
+    @apply p-2;
   }
   li {
-    @apply px-2 py-2 flex items-center hover:bg-threads-gray-light active:bg-opacity-80 rounded-md cursor-pointer;
+    @apply px-2 py-2 flex items-center justify-between rounded-md cursor-pointer hover:bg-threads-gray-light active:bg-opacity-80;
+    svg {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+  li.danger {
+    @apply text-red-500 hover:bg-red-500 hover:text-white active:bg-opacity-80;
   }
 }

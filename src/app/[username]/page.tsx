@@ -21,7 +21,10 @@ export default function Profile() {
   // Effect
   useEffect(() => {
     // Check if username exists
-    if (!username) notFound();
+    if (!username) {
+      router.push("/");
+      return;
+    }
     // Fetch user data and posts
     fetchUserDataPosts();
   }, []);
@@ -36,7 +39,8 @@ export default function Profile() {
       body: JSON.stringify({ username }),
     });
     if (!response.ok) {
-      toast.error("Error occured when trying to fetch user posts");
+      toast.error("Error occured when trying to fetch user");
+      router.push("/");
       return;
     }
     const data = await response.json();

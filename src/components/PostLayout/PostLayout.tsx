@@ -1,11 +1,13 @@
 "use client";
 
+import { deletePost } from "@/actions/delete-post";
 import { Post } from "@/types/Post";
 import moment from "moment-timezone";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Dropwdown from "../Dropdown/Dropwdown";
 
 export default function PostLayout({ post }: { post: Post }) {
@@ -14,6 +16,19 @@ export default function PostLayout({ post }: { post: Post }) {
 
   // State management
   const [openDropdown, setOpenDropdown] = useState(false);
+
+  // Functions
+  const prepareDeletePost = async () => {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+    // Try to remove the post from database
+    try {
+      await deletePost(post._id);
+    } catch (e: any) {
+      toast.error(e.message);
+      return;
+    }
+    toast.success("Post deleted!");
+  };
 
   // Render
   return (
@@ -96,7 +111,7 @@ export default function PostLayout({ post }: { post: Post }) {
                         ></path>
                       </svg>
                     </li>
-                    <li className="danger">
+                    <li className="danger" onClick={() => prepareDeletePost()}>
                       Delete
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

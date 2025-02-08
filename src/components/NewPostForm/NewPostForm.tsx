@@ -62,14 +62,15 @@ export default function NewPostForm({
     <form action={prepareCreatePost}>
       {/* Content */}
       <div className="flex gap-3 w-full">
-        {/* User avatar */}
+        {/* Profile avatar */}
         <div>
           <Image
             src={session?.user.profile || "/avatar.jpg"}
-            alt="User"
+            alt="Profile"
             width={50}
             height={50}
-            className="rounded-full mt-5"
+            className="rounded-full object-cover aspect-square mt-5"
+            unoptimized
           ></Image>
         </div>
 

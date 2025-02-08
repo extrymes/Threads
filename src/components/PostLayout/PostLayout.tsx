@@ -33,14 +33,15 @@ export default function PostLayout({ post }: { post: Post }) {
   // Render
   return (
     <div className="post">
-      {/* Profile */}
+      {/* User avatar */}
       <div>
         <Image
           src={post.profile}
           alt="User"
           width={50}
           height={50}
-          className="rounded-full object-cover"
+          className="rounded-full object-cover aspect-square"
+          unoptimized
         />
       </div>
 

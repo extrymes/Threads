@@ -113,14 +113,15 @@ export default function ConnectedLayout({
         {/* Profile */}
         <div className="relative">
           {session?.user ? (
-            // User avatar
+            // Profile avatar
             <Image
               onClick={() => setOpenDropdown((state) => !state)}
-              src={session.user.profile}
+              src={session.user.profile || "/avatar.jpg"}
               alt="Profile"
               width={60}
               height={60}
-              className="cursor-pointer rounded-full border-4 border-transparent hover:border-threads-gray-light duration-150"
+              className="rounded-full object-cover aspect-square cursor-pointer border-4 border-transparent hover:border-threads-gray-light duration-150"
+              unoptimized
             ></Image>
           ) : (
             // Login button

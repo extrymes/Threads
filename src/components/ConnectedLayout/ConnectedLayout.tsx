@@ -10,6 +10,7 @@ import Button from "../Button/Button";
 import Dropwdown from "../Dropdown/Dropwdown";
 import Footer from "../Footer/Footer";
 import NewPostForm from "../NewPostForm/NewPostForm";
+import Modal from "../Modal/Modal";
 
 export default function ConnectedLayout({
   children,
@@ -33,22 +34,11 @@ export default function ConnectedLayout({
   // Render
   return (
     <section className="flex flex-col min-h-screen px-5">
-      {openModal &&
-        createPortal(
-          <div
-            className="modal-background"
-            onClick={(e) => {
-              if (e.target === e.currentTarget) {
-                setOpenModal(false);
-              }
-            }}
-          >
-            <div className="modal-foreground">
-              <NewPostForm closeModal={() => setOpenModal(false)} />
-            </div>
-          </div>,
-          document.body
-        )}
+      {/* New post modal */}
+      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+        <NewPostForm closeModal={() => setOpenModal(false)} />
+      </Modal>
+
       {/* Header */}
       <header className="flex justify-between items-center py-4">
         {/* Nav */}

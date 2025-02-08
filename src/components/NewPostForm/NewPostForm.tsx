@@ -3,7 +3,7 @@
 import { createPost } from "@/actions/create-post";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../Button/Button";
 
@@ -18,6 +18,20 @@ export default function NewPostForm({
 
   // State management
   const [content, setContent] = useState("");
+
+  // References
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Side effects
+  useEffect(() => {
+    // Focus textarea when typing
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.length === 1 && document.activeElement !== textareaRef.current)
+        textareaRef.current?.focus();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Functions
   const prepareCreatePost = async () => {
@@ -69,6 +83,7 @@ export default function NewPostForm({
             onChange={(e) => setContent(e.target.value)}
             maxLength={maxLength}
             rows={3}
+            ref={textareaRef}
           />
         </div>
       </div>

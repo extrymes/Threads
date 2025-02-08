@@ -1,9 +1,12 @@
 "use client";
 
+import Button from "@/components/Button/Button";
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
+import Modal from "@/components/Modal/Modal";
 import PostLayout from "@/components/PostLayout/PostLayout";
 import { Post } from "@/types/Post";
 import { User } from "@/types/User";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,6 +14,7 @@ import { toast } from "react-toastify";
 
 export default function Profile() {
   // Variables
+  const { data: session } = useSession();
   const params = useParams();
   const username = params.username?.slice(3);
   const router = useRouter();
@@ -18,6 +22,11 @@ export default function Profile() {
   // State management
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [profileInput, setProfileInput] = useState("");
+  const [bioInput, setBioInput] = useState("");
+  const [linkInput, setLinkInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Side effects
   useEffect(() => {
@@ -37,50 +46,169 @@ export default function Profile() {
       },
       body: JSON.stringify({ username }),
     });
+    const data = await response.json();
     if (!response.ok) {
       toast.error("Error occured when trying to fetch user");
       router.push("/");
       return;
     }
-    const data = await response.json();
     setUser(data.user);
     setPosts(data.posts);
+  };
+  if (!user || !posts) return;
+  const openProfileEditionModal = () => {
+    setProfileInput(user.profile);
+    setBioInput(user.bio);
+    setLinkInput(user.url);
+    setOpenModal(true);
+  };
+  const saveChanges = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    let finalBio = bioInput;
+    if (!finalBio) finalBio = "-";
+    const response = await fetch("/api/user/edit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        profile: profileInput,
+        bio: finalBio,
+        url: linkInput,
+      }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      setIsLoading(false);
+      toast.error("Error when trying to save changes!");
+      return;
+    }
+    const newUser = {
+      ...user,
+      profile: profileInput,
+      bio: finalBio,
+      url: linkInput,
+    };
+    setUser(newUser);
+    setOpenModal(false);
+    setIsLoading(false);
+    toast.success("Profile updated!");
   };
 
   // Render
   return (
     <ConnectedLayout>
+      {/* Profile edition modal */}
+      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+        {/* Profile avatar */}
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <label className="label" htmlFor="picture">
+              Profile avatar
+            </label>
+            <input
+              type="url"
+              name="picture"
+              id="picture"
+              className="input"
+              placeholder="https://imgur.com/image.png"
+              value={profileInput}
+              onChange={(e) => setProfileInput(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            <Image
+              src={profileInput || "./avatar.jpg"}
+              alt="Profile"
+              width={100}
+              height={100}
+              className="rounded-full object-cover aspect-square"
+              unoptimized
+            ></Image>
+          </div>
+        </div>
+
+        {/* Bio */}
+        <div className="mt-5">
+          <label className="label" htmlFor="bio">
+            Bio
+          </label>
+          <textarea
+            className="input"
+            id="bio"
+            name="bio"
+            placeholder="My name is Simon..."
+            value={bioInput}
+            onChange={(e) => setBioInput(e.target.value)}
+          ></textarea>
+        </div>
+
+        {/* URL */}
+        <div className="mt-5">
+          <label className="label" htmlFor="url">
+            Link
+          </label>
+          <input
+            className="input"
+            type="url"
+            id="url"
+            name="url"
+            placeholder="https://42.fr"
+            value={linkInput}
+            onChange={(e) => setLinkInput(e.target.value)}
+          ></input>
+        </div>
+
+        {/* Edit button */}
+        <div className="flex justify-end mt-1">
+          <div>
+            <Button onClick={saveChanges} disabled={isLoading}>
+              Save changes
+            </Button>
+          </div>
+        </div>
+      </Modal>
       <div className="md:w-[800px] w-full mx-auto mt-10 text-white">
         {/* Infos */}
         <div className="flex justify-between gap-4">
           {/* Data */}
           <div>
-            <h1 className="text-3xl font-semibold">{user?.name}</h1>
+            <h1 className="text-3xl font-semibold">{user.name}</h1>
             <div className="text-threads-gray-light mt-2">
-              @{user?.username || "unknown"}
+              @{user.username || "unknown"}
             </div>
-            <div className="mt-5 whitespace-pre-line">{user?.bio}</div>
-            {user?.url && (
+            <div className="mt-5 whitespace-pre-line break-words">
+              {user.bio}
+            </div>
+            {user.url && (
               <div className="mt-5 text-blue-500 hover:text-blue-400 duration-150">
-                <a href={user?.url} target="_blank">
-                  {user?.url}
-                </a>
+                <a href={user.url}>{user.url}</a>
               </div>
             )}
           </div>
 
-          {/* Avatar */}
+          {/* Profile avatar */}
           <div>
             <Image
-              src={user?.profile || "/avatar.jpg"}
-              alt="User"
+              src={user.profile || "/avatar.jpg"}
+              alt="Profile"
               width={100}
               height={100}
               priority
-              className="rounded-full object-cover"
+              className="rounded-full object-cover aspect-square"
+              unoptimized
             />
           </div>
         </div>
+
+        {/* Profile edition */}
+        {session?.user.username === username && (
+          <div className="user-button" onClick={openProfileEditionModal}>
+            Edit profile
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="flex mt-10 mb-5 gap-4">

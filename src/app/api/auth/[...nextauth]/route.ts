@@ -12,24 +12,18 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        // Authorize user by checking email and password in database
         if (!credentials) return null;
         const { email, password } = credentials;
-        // Connect to the MongoDB Cluster
         const client = await MongoClient.connect(
           process.env.MONGODB_CLIENT as string
         );
-        // Connect to the MongoDB database
         const db = client.db(process.env.MONGODB_DATABASE);
-        // Get user for this email
         const user = await db.collection("users").findOne({ email });
-        // Close MongoDB connection
         await client.close();
-        // Check if the user exists
         if (!user) throw new Error("This user does not exist!");
-        // Check if the password is valid
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) throw new Error("The password is not valid!");
-        // Return user object
         return {
           id: user._id.toString(),
           name: user.name,

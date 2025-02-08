@@ -25,16 +25,13 @@ export default function Dropwdown({
         setOpenDropdown(false);
       }
     };
-
     // Handle escape key
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpenDropdown(false);
     };
-
     // Add event listeners on mounting
     document.addEventListener("mousedown", handleMouseDown);
     document.addEventListener("keydown", handleKeyDown);
-
     // Remove event listeners on demounting
     return () => {
       document.removeEventListener("mousedown", handleMouseDown);

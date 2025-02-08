@@ -7,7 +7,7 @@ export default function Search() {
   // Variables
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Functions
+  // Side effects
   useEffect(() => {
     // Focus input when typing
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -22,6 +22,7 @@ export default function Search() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Render
   return (
     <ConnectedLayout>
       <div className="mt-10 md:w-[800px] mx-auto w-full">

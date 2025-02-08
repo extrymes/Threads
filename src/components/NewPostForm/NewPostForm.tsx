@@ -39,7 +39,6 @@ export default function NewPostForm({
       return;
     }
     toast.success("Post created!");
-    // Reset content and close modal
     setContent("");
     if (closeModal) closeModal();
   };

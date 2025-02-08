@@ -10,32 +10,28 @@ export default async function Index() {
   // Variables
   const session = await getServerSession(authOptions);
 
-  // Try to find all posts
+  // Try to fetch all posts
   let posts = [];
+  let client;
   try {
-    // Connect to the MongoDB cluster
-    const client = await MongoClient.connect(
-      process.env.MONGODB_CLIENT as string
-    );
-    // Connect to the MongoDB database
+    client = await MongoClient.connect(process.env.MONGODB_CLIENT as string);
     const db = client.db(process.env.MONGODB_DATABASE);
-    // Find all posts
     posts = await db
       .collection("posts")
       .find()
       .sort({ creation: -1 })
       .toArray();
-    // Format posts
     posts = posts.map((post: any) => ({
       ...post,
       _id: post._id.toString(),
     }));
-    // Close MongoDB connection
     await client.close();
   } catch (e: any) {
+    if (client) await client.close();
     toast.error(e.message);
   }
 
+  // Render
   return (
     <ConnectedLayout>
       <div className="md:w-[800px] w-full mx-auto mt-10">

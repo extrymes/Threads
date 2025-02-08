@@ -5,7 +5,7 @@ import PostLayout from "@/components/PostLayout/PostLayout";
 import { Post } from "@/types/Post";
 import { User } from "@/types/User";
 import Image from "next/image";
-import { notFound, useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -13,19 +13,18 @@ export default function Profile() {
   // Variables
   const params = useParams();
   const username = params.username?.slice(3);
+  const router = useRouter();
 
-  // States
+  // State management
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
 
-  // Effect
+  // Side effects
   useEffect(() => {
-    // Check if username exists
     if (!username) {
       router.push("/");
       return;
     }
-    // Fetch user data and posts
     fetchUserDataPosts();
   }, []);
 
@@ -48,6 +47,7 @@ export default function Profile() {
     setPosts(data.posts);
   };
 
+  // Render
   return (
     <ConnectedLayout>
       <div className="md:w-[800px] w-full mx-auto mt-10 text-white">
@@ -76,6 +76,7 @@ export default function Profile() {
               alt="User"
               width={100}
               height={100}
+              priority
               className="rounded-full object-cover"
             />
           </div>

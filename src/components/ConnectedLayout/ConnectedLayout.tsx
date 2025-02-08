@@ -111,11 +111,11 @@ export default function ConnectedLayout({
         <Image src="/logo.png" alt="Threads" priority width={40} height={40} />
 
         {/* Profile */}
-        <div className="z-10 relative inline-block text-left">
+        <div className="relative">
           {session?.user ? (
             // User avatar
             <Image
-              onClick={() => setOpenDropdown(!openDropdown)}
+              onClick={() => setOpenDropdown((state) => !state)}
               src={session.user.profile}
               alt="Profile"
               width={60}
@@ -132,36 +132,26 @@ export default function ConnectedLayout({
           {/* Dropdown menu */}
           <Dropwdown
             openDropdown={openDropdown}
-            setDropdownOpen={setOpenDropdown}
+            setOpenDropdown={setOpenDropdown}
+            className="right-0 mt-2"
           >
             {/* My profile option */}
             <Link href={`/@${session?.user.username}`}>
               <li>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mr-1"
-                  width={22}
-                  height={22}
-                  viewBox="0 0 24 24"
-                >
+                My profile
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
                     d="M12 12q-1.65 0-2.825-1.175T8 8t1.175-2.825T12 4t2.825 1.175T16 8t-1.175 2.825T12 12m-8 8v-2.8q0-.85.438-1.562T5.6 14.55q1.55-.775 3.15-1.162T12 13t3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20z"
                   ></path>
                 </svg>
-                My profile
               </li>
             </Link>
 
             {/* Logout option */}
-            <li onClick={() => signOut()}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="mr-1 text-red-500"
-                width={22}
-                height={22}
-                viewBox="0 0 24 24"
-              >
+            <li className="danger" onClick={() => signOut()}>
+              Logout
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
                   fillRule="evenodd"
@@ -169,7 +159,6 @@ export default function ConnectedLayout({
                   clipRule="evenodd"
                 ></path>
               </svg>
-              Logout
             </li>
           </Dropwdown>
         </div>

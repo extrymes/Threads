@@ -8,21 +8,21 @@ export const createPost = async (
   username: string,
   profile: string
 ) => {
-  // Connect to the MongoDB cluster
-  const client = await MongoClient.connect(
-    process.env.MONGODB_CLIENT as string
-  );
-  // Connect to the database
-  const db = client.db(process.env.MONGODB_DATABASE);
-  // Create post in database
-  await db.collection("posts").insertOne({
-    content,
-    username,
-    profile,
-    creation: new Date(),
-  });
-  // Close MongoDB connection
-  await client.close();
-  // Revalidate path
-  revalidatePath("/");
+  let client;
+  // Try to create a new post in database
+  try {
+    client = await MongoClient.connect(process.env.MONGODB_CLIENT as string);
+    const db = client.db(process.env.MONGODB_DATABASE);
+    await db.collection("posts").insertOne({
+      content,
+      username,
+      profile,
+      creation: new Date(),
+    });
+    await client.close();
+    revalidatePath("/");
+  } catch (e: any) {
+    if (client) await client.close();
+    throw new Error(e.message);
+  }
 };

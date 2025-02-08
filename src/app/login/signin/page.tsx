@@ -36,10 +36,10 @@ export default function Signin() {
       return;
     }
     toast.success("You are logged in!");
-    // Redirect user to home page
     router.replace("/");
   };
 
+  // Render
   return (
     <div className="w-[440px] mx-auto pt-[19vw]">
       {/* Title */}

@@ -34,11 +34,11 @@ export default function Signup() {
       toast.error(e.message);
       return;
     }
-    // Redirect user to sign in page
     toast.success("Your account has been created!");
     router.push("/login/signin");
   };
 
+  // Render
   return (
     <div className="w-[440px] mx-auto pt-[19vw]">
       {/* Title */}

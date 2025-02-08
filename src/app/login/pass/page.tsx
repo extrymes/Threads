@@ -15,6 +15,7 @@ export default function Pass() {
     router.push("/");
   };
 
+  // Render
   return (
     <div className="w-[440px] mx-auto pt-[19vw]">
       {/* Title */}

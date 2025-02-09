@@ -34,7 +34,7 @@ export default function PostLayout({ post }: { post: Post }) {
   return (
     <div className="post">
       {/* User avatar */}
-      <div>
+      <div className="shrink-0">
         <Image
           src={post.profile}
           alt="User"
@@ -46,7 +46,7 @@ export default function PostLayout({ post }: { post: Post }) {
       </div>
 
       {/* Post content */}
-      <div className="text-white w-full">
+      <div className="text-white w-full min-w-0">
         <div className="flex justify-between text-center">
           {/* Username */}
           <Link href={`/@${post.username}`}>
@@ -132,7 +132,9 @@ export default function PostLayout({ post }: { post: Post }) {
         </div>
 
         {/* Text */}
-        <div className="mt-3 whitespace-pre-line">{post.content}</div>
+        <div className="mt-3 whitespace-pre-line break-words">
+          {post.content}
+        </div>
       </div>
     </div>
   );

@@ -188,7 +188,7 @@ export default function Profile() {
         {/* Infos */}
         <div className="flex justify-between gap-4">
           {/* Data */}
-          <div>
+          <div className="min-w-0 max-w-lg">
             <h1 className="text-3xl font-semibold">{user.name}</h1>
             <div className="text-threads-gray-light mt-2">
               @{user.username || "unknown"}
@@ -204,7 +204,7 @@ export default function Profile() {
           </div>
 
           {/* Profile avatar */}
-          <div>
+          <div className="shrink-0">
             <Image
               src={user.profile || "/avatar.jpg"}
               alt="Profile"

@@ -1,0 +1,63 @@
+.modal-background {
+  @apply bg-gray-900 bg-opacity-80 fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center z-30;
+}
+
+.modal-foreground {
+  @apply rounded-xl shadow lg:w-[740px] w-10/12 overflow-y-auto p-5 bg-threads-modal border border-threads-gray-light;
+}
+
+.modal-background.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.modal-foreground.slide-in {
+  animation: slideIn 0.4s ease-out;
+}
+
+.modal-background.fade-out {
+  animation: fadeOut 0.4s ease-in-out;
+}
+
+.modal-foreground.slide-out {
+  animation: slideOut 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+}

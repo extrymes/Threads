@@ -22,7 +22,7 @@ export default function Profile() {
   // State management
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [openModal, setOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [profileInput, setProfileInput] = useState("");
   const [bioInput, setBioInput] = useState("");
   const [linkInput, setLinkInput] = useState("");
@@ -60,7 +60,7 @@ export default function Profile() {
     setProfileInput(user.profile);
     setBioInput(user.bio);
     setLinkInput(user.url);
-    setOpenModal(true);
+    setIsOpenModal(true);
   };
   const checkForChanges = (): boolean => {
     return (
@@ -99,7 +99,7 @@ export default function Profile() {
       url: linkInput,
     };
     setUser(newUser);
-    setOpenModal(false);
+    setIsOpenModal(false);
     setIsLoading(false);
     toast.success("Profile updated!");
   };
@@ -108,7 +108,11 @@ export default function Profile() {
   return (
     <ConnectedLayout>
       {/* Profile edition modal */}
-      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+      <Modal
+        title="Profile edition"
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+      >
         {/* Profile avatar */}
         <div className="flex gap-3">
           <div className="flex-1">

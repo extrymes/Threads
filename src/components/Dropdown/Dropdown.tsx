@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
 
-export default function Dropwdown({
+export default function Dropdown({
   children,
-  openDropdown,
-  setOpenDropdown,
+  isOpen,
+  setIsOpen,
   className,
 }: {
   children: React.ReactNode;
-  openDropdown: boolean;
-  setOpenDropdown: (state: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (state: boolean) => void;
   className?: string;
 }) {
   // Variables
@@ -22,14 +22,14 @@ export default function Dropwdown({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setOpenDropdown(false);
+        setIsOpen(false);
       }
     };
     // Handle escape key
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpenDropdown(false);
+      if (event.key === "Escape") setIsOpen(false);
     };
-    if (openDropdown) {
+    if (isOpen) {
       document.addEventListener("mousedown", handleMouseDown);
       document.addEventListener("keydown", handleKeyDown);
     } else {
@@ -37,12 +37,13 @@ export default function Dropwdown({
       document.removeEventListener("keydown", handleKeyDown);
     }
     return () => {};
-  }, [openDropdown]);
+  }, [isOpen]);
 
   // Render
-  return openDropdown ? (
+  if (!isOpen) return null;
+  return (
     <div className={`dropdown-menu ${className}`} ref={dropdownRef}>
       <ul>{children}</ul>
     </div>
-  ) : null;
+  );
 }

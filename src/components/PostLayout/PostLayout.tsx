@@ -8,14 +8,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import Dropwdown from "../Dropdown/Dropwdown";
+import Dropdown from "../Dropdown/Dropdown";
 
 export default function PostLayout({ post }: { post: Post }) {
   // Variables
   const { data: session } = useSession();
 
   // State management
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   // Functions
   const prepareDeletePost = async () => {
@@ -71,7 +71,7 @@ export default function PostLayout({ post }: { post: Post }) {
                   height="1.2em"
                   className="cursor-pointer"
                   viewBox="0 0 24 24"
-                  onClick={() => setOpenDropdown((state) => !state)}
+                  onClick={() => setIsOpenDropdown((state) => !state)}
                 >
                   <path
                     fill="currentColor"
@@ -83,9 +83,9 @@ export default function PostLayout({ post }: { post: Post }) {
 
             {/* Dropdown menu */}
             {session?.user && (
-              <Dropwdown
-                openDropdown={openDropdown}
-                setOpenDropdown={setOpenDropdown}
+              <Dropdown
+                isOpen={isOpenDropdown}
+                setIsOpen={setIsOpenDropdown}
                 className="right-0 top-8"
               >
                 {session.user.username != post.username ? (
@@ -126,7 +126,7 @@ export default function PostLayout({ post }: { post: Post }) {
                     </li>
                   </>
                 )}
-              </Dropwdown>
+              </Dropdown>
             )}
           </div>
         </div>

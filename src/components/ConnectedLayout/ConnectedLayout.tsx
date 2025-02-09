@@ -4,13 +4,12 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 import Button from "../Button/Button";
-import Dropwdown from "../Dropdown/Dropwdown";
+import Dropdown from "../Dropdown/Dropdown";
 import Footer from "../Footer/Footer";
-import NewPostForm from "../NewPostForm/NewPostForm";
 import Modal from "../Modal/Modal";
+import NewPostForm from "../NewPostForm/NewPostForm";
 
 export default function ConnectedLayout({
   children,
@@ -22,21 +21,15 @@ export default function ConnectedLayout({
   const pathname = usePathname();
 
   // State management
-  const [openModal, setOpenModal] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(false);
-
-  // Side effects
-  useEffect(() => {
-    if (openModal) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "unset";
-  }, [openModal]);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   // Render
   return (
     <section className="flex flex-col min-h-screen px-5">
       {/* New post modal */}
-      <Modal openModal={openModal} setOpenModal={setOpenModal}>
-        <NewPostForm closeModal={() => setOpenModal(false)} />
+      <Modal title="New post" isOpen={isOpenModal} setIsOpen={setIsOpenModal}>
+        <NewPostForm closeModal={() => setIsOpenModal(false)} />
       </Modal>
 
       {/* Header */}
@@ -87,7 +80,7 @@ export default function ConnectedLayout({
               width="1em"
               height="1em"
               viewBox="0 0 256 256"
-              onClick={() => setOpenModal(true)}
+              onClick={() => setIsOpenModal(true)}
             >
               <path
                 fill="currentColor"
@@ -105,7 +98,7 @@ export default function ConnectedLayout({
           {session?.user ? (
             // Profile avatar
             <Image
-              onClick={() => setOpenDropdown((state) => !state)}
+              onClick={() => setIsOpenDropdown((state) => !state)}
               src={session.user.profile || "/avatar.jpg"}
               alt="Profile"
               width={60}
@@ -121,9 +114,9 @@ export default function ConnectedLayout({
           )}
 
           {/* Dropdown menu */}
-          <Dropwdown
-            openDropdown={openDropdown}
-            setOpenDropdown={setOpenDropdown}
+          <Dropdown
+            isOpen={isOpenDropdown}
+            setIsOpen={setIsOpenDropdown}
             className="right-0 mt-2"
           >
             {/* My profile option */}
@@ -151,7 +144,7 @@ export default function ConnectedLayout({
                 ></path>
               </svg>
             </li>
-          </Dropwdown>
+          </Dropdown>
         </div>
       </header>
 

@@ -62,8 +62,15 @@ export default function Profile() {
     setLinkInput(user.url);
     setOpenModal(true);
   };
+  const checkForChanges = (): boolean => {
+    return (
+      user.profile !== profileInput ||
+      user.bio !== bioInput ||
+      user.url !== linkInput
+    );
+  };
   const saveChanges = async () => {
-    if (isLoading) return;
+    if (isLoading || !checkForChanges()) return;
     setIsLoading(true);
     let finalBio = bioInput;
     if (!finalBio) finalBio = "-";
@@ -164,7 +171,10 @@ export default function Profile() {
         {/* Edit button */}
         <div className="flex justify-end mt-1">
           <div>
-            <Button onClick={saveChanges} disabled={isLoading}>
+            <Button
+              onClick={saveChanges}
+              disabled={isLoading || !checkForChanges()}
+            >
               Save changes
             </Button>
           </div>

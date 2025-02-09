@@ -244,11 +244,17 @@ export default function Profile() {
 
         {/* Posts */}
         <div className="flex flex-col gap-4">
-          {posts.map((post: Post) => (
-            <div key={post._id}>
-              <PostLayout post={post} />
+          {posts.length > 0 ? (
+            posts.map((post: Post) => (
+              <div key={post._id}>
+                <PostLayout post={post} />
+              </div>
+            ))
+          ) : (
+            <div className="text-threads-gray-light text-center mt-4">
+              No post here yet...
             </div>
-          ))}
+          )}
         </div>
       </div>
     </ConnectedLayout>

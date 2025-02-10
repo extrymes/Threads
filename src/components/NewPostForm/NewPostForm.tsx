@@ -1,6 +1,7 @@
 "use client";
 
 import { createPost } from "@/actions/create-post";
+import { isSimpleKey } from "@/utils/is-simple-key";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -26,7 +27,7 @@ export default function NewPostForm({
   useEffect(() => {
     // Focus textarea when typing
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.length === 1 && document.activeElement !== textareaRef.current)
+      if (isSimpleKey(e) && document.activeElement !== textareaRef.current)
         textareaRef.current?.focus();
     };
     document.addEventListener("keydown", handleKeyDown);

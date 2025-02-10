@@ -1,6 +1,7 @@
 "use client";
 
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
+import { isSimpleKey } from "@/utils/is-simple-key";
 import { useEffect, useRef } from "react";
 
 export default function Search() {
@@ -11,7 +12,7 @@ export default function Search() {
   useEffect(() => {
     // Focus input when typing
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.length == 1 && document.activeElement != inputRef.current)
+      if (isSimpleKey(e) && document.activeElement !== inputRef.current)
         inputRef.current?.focus();
     };
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./Modal.css";
 
@@ -17,8 +17,20 @@ export default function Modal({
   const [isVisible, setIsVisible] = useState(isOpen);
   const [isClosing, setIsClosing] = useState(false);
 
+  // References
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
   // Side effects
   useEffect(() => {
+    // Handle click outside
+    const handleMouseDown = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
     // Handle escape key
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setIsOpen(false);
@@ -26,6 +38,7 @@ export default function Modal({
     if (isOpen) {
       setIsVisible(true);
       document.body.style.overflow = "hidden";
+      document.addEventListener("mousedown", handleMouseDown);
       document.addEventListener("keydown", handleKeyDown);
     } else {
       setIsClosing(true);
@@ -33,25 +46,19 @@ export default function Modal({
         setIsClosing(false);
         setIsVisible(false);
         document.body.style.overflow = "unset";
-        document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("keydown", handleKeyDown);
       }, 390);
     }
   }, [isOpen]);
 
-  // Functions
-  const handleClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) setIsOpen(false);
-  };
-
   // Render
   if (!isVisible) return null;
   return createPortal(
-    <div
-      className={`modal-background ${isClosing ? "fade-out" : "fade-in"}`}
-      onClick={(e) => handleClick(e)}
-    >
+    <div className={`modal-background ${isClosing ? "fade-out" : "fade-in"}`}>
       <div
         className={`modal-foreground ${isClosing ? "slide-out" : "slide-in"}`}
+        ref={modalRef}
       >
         <header className="flex justify-between items-center text-xl text-white">
           <div>{title}</div>

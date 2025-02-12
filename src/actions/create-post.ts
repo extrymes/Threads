@@ -19,10 +19,10 @@ export const createPost = async (
       profile,
       creation: new Date(),
     });
-    await client.close();
     revalidatePath("/");
   } catch (e: any) {
-    if (client) await client.close();
     throw new Error(e.message);
+  } finally {
+    if (client) await client.close();
   }
 };

@@ -16,15 +16,9 @@ export const createUser = async (
     const db = client.db(process.env.MONGODB_DATABASE);
     let user;
     user = await db.collection("users").findOne({ username });
-    if (user) {
-      await client.close();
-      throw new Error("This username is already used!");
-    }
+    if (user) throw new Error("This username is already used!");
     user = await db.collection("users").findOne({ email });
-    if (user) {
-      await client.close();
-      throw new Error("This email is already used!");
-    }
+    if (user) throw new Error("This email is already used!");
     const encryptedPassword = await bcrypt.hash(password.toString(), 10);
     await db.collection("users").insertOne({
       name,
@@ -36,9 +30,9 @@ export const createUser = async (
       url: "",
       creation: new Date(),
     });
-    await client.close();
   } catch (e: any) {
-    if (client) await client.close();
     throw new Error(e.message);
+  } finally {
+    if (client) await client.close();
   }
 };

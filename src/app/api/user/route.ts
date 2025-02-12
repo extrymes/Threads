@@ -9,28 +9,32 @@ export async function POST(req: Request) {
   try {
     client = await MongoClient.connect(process.env.MONGODB_CLIENT as string);
     const db = client.db(process.env.MONGODB_DATABASE);
-    let user = await db.collection("users").findOne({ username });
-    if (!user) throw new Error("This user does not exist");
+    const user = await db.collection("users").findOne({ username });
+    if (!user)
+      return NextResponse.json(
+        { error: "This user does not exist!" },
+        { status: 404 }
+      );
     const formattedUser = { ...user, _id: user._id.toString() };
-    let posts = await db
+    const posts = await db
       .collection("posts")
       .find({ username })
       .sort({ creation: -1 })
       .toArray();
-    posts = posts.map((post: any) => ({
+    const formattedPosts = posts.map((post) => ({
       ...post,
       _id: post._id.toString(),
     }));
-    await client.close();
     return NextResponse.json(
       {
         user: formattedUser,
-        posts,
+        posts: formattedPosts,
       },
       { status: 200 }
     );
   } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  } finally {
     if (client) await client.close();
-    throw new Error(e.message);
   }
 }

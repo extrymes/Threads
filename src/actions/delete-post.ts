@@ -19,11 +19,11 @@ export const deletePost = async (postId: string) => {
     if (post.username != session?.user.username)
       throw new Error("You are not the author of this post!");
     await db.collection("posts").deleteOne({ _id: post._id });
-    await client.close();
     revalidatePath("/");
     revalidatePath(`/@${post.username}`, "page");
   } catch (e: any) {
-    if (client) await client.close();
     throw new Error(e.message);
+  } finally {
+    if (client) await client.close();
   }
 };

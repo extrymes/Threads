@@ -17,6 +17,7 @@ export const createPost = async (
       content,
       username,
       profile,
+      edited: false,
       creation: new Date(),
     });
     revalidatePath("/");

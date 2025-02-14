@@ -3,5 +3,6 @@ export interface Post {
   content: string;
   username: string;
   profile: string;
+  edited: boolean;
   creation: Date;
 }

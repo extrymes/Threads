@@ -1,23 +1,45 @@
 "use client";
 
 import { deletePost } from "@/actions/delete-post";
+import { editPost } from "@/actions/edit-post";
 import { Post } from "@/types/Post";
 import moment from "moment-timezone";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Dropdown from "../Dropdown/Dropdown";
 
 export default function PostLayout({ post }: { post: Post }) {
   // Variables
   const { data: session } = useSession();
+  const maxLength = 200;
 
   // State management
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editInput, setEditInput] = useState("");
+
+  // References
+  const editInputRef = useRef<HTMLInputElement | null>(null);
 
   // Functions
+  const prepareEditPost = async () => {
+    setIsEditing(false);
+    if (post.content === editInput || editInput.length === 0) return;
+    if (editInput.length > maxLength) {
+      toast.error("Invalid content length!");
+      return;
+    }
+    try {
+      await editPost(post._id, editInput);
+    } catch (e: any) {
+      toast.error(e.message);
+      return;
+    }
+    toast.success("Post edited!");
+  };
   const prepareDeletePost = async () => {
     if (!confirm("Are you sure you want to delete this post?")) return;
     // Try to remove the post from database
@@ -29,6 +51,20 @@ export default function PostLayout({ post }: { post: Post }) {
     }
     toast.success("Post deleted!");
   };
+
+  // Side effects
+  useEffect(() => {
+    // Handle editing keys
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsEditing(false);
+      else if (e.key === "Enter") prepareEditPost();
+    };
+    if (isEditing) {
+      editInputRef.current?.focus();
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isEditing, prepareEditPost]);
 
   // Render
   return (
@@ -45,7 +81,7 @@ export default function PostLayout({ post }: { post: Post }) {
         />
       </div>
 
-      {/* Post content */}
+      {/* Post */}
       <div className="text-white w-full min-w-0">
         <div className="flex justify-between text-center">
           {/* Username */}
@@ -54,16 +90,19 @@ export default function PostLayout({ post }: { post: Post }) {
           </Link>
 
           <div className="flex items-center gap-2 text-sm text-threads-gray-light relative">
-            {/* Creation date */}
-            <div>
-              {moment
-                .utc(post.creation, "YYYY-MM-DD HH:mm:ss")
-                .tz("Europe/Paris")
-                .fromNow()}
+            {/* Creation date and edited state */}
+            <div className="flex gap-1">
+              <p>
+                {moment
+                  .utc(post.creation, "YYYY-MM-DD HH:mm:ss")
+                  .tz("Europe/Paris")
+                  .fromNow()}
+              </p>
+              <p>{post.edited && "(edited)"}</p>
             </div>
 
             {/* Options */}
-            {session?.user && (
+            {session?.user && !isEditing && (
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +139,12 @@ export default function PostLayout({ post }: { post: Post }) {
                   </li>
                 ) : (
                   <>
-                    <li>
+                    <li
+                      onClick={() => {
+                        setEditInput(post.content);
+                        setIsEditing(true);
+                      }}
+                    >
                       Edit
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -131,10 +175,48 @@ export default function PostLayout({ post }: { post: Post }) {
           </div>
         </div>
 
-        {/* Text */}
-        <div className="mt-3 whitespace-pre-line break-words">
-          {post.content}
-        </div>
+        {/* Post content or editing mode */}
+        {isEditing ? (
+          <div>
+            <input
+              className="input"
+              value={editInput}
+              onChange={(e) => setEditInput(e.target.value)}
+              ref={editInputRef}
+              maxLength={maxLength}
+            />
+            <div className="flex mt-2 text-sm justify-between">
+              <div className="flex">
+                <div className="flex gap-1">
+                  <p>escape to</p>
+                  <b
+                    className="cursor-pointer"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    cancel
+                  </b>
+                </div>
+                <div className="mx-2">•</div>
+                <div className="flex gap-1">
+                  <p>entor to</p>
+                  <b
+                    className="cursor-pointer"
+                    onClick={() => prepareEditPost()}
+                  >
+                    save
+                  </b>
+                </div>
+              </div>
+              <div className="text-threads-gray-light">
+                {editInput.length} / {maxLength}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-3 whitespace-pre-line break-words">
+            {post.content}
+          </div>
+        )}
       </div>
     </div>
   );

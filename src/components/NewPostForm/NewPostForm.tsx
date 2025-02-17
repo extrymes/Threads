@@ -23,17 +23,6 @@ export default function NewPostForm({
   // References
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Side effects
-  useEffect(() => {
-    // Focus textarea when typing
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (isSimpleKey(e) && document.activeElement !== textareaRef.current)
-        textareaRef.current?.focus();
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
   // Functions
   const prepareCreatePost = async () => {
     // Check if user is connected

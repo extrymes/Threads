@@ -41,7 +41,7 @@ export default function Dropdown({
 
   // Functions
   const handleDropdownClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).tagName.toLowerCase() === "li")
+    if ((e.target as HTMLElement).tagName.toLowerCase() !== "ul")
       setIsOpen(false);
   };
 

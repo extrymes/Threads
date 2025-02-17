@@ -1,9 +1,9 @@
 .modal-background {
-  @apply bg-gray-900 bg-opacity-80 fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center z-30;
+  @apply bg-black bg-opacity-70 fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center z-30;
 }
 
 .modal-foreground {
-  @apply rounded-xl shadow lg:w-[740px] w-10/12 overflow-y-auto p-5 bg-threads-modal border border-threads-gray-light;
+  @apply rounded-xl shadow lg:w-[740px] w-10/12 overflow-y-auto p-5 bg-threads-modal;
 }
 
 .modal-background.fade-in {

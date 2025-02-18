@@ -1,12 +1,10 @@
-import { hasCookie } from "cookies-next";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   let isAuthenticated = false;
 
   // Check if is invited user
-  const invited = await hasCookie("guest", { cookies });
+  const invited = request.cookies.get("guest");
   if (invited) isAuthenticated = true;
 
   // Check if user is connected

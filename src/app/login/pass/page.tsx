@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@/components/Button/Button";
-import { setCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -11,7 +10,7 @@ export default function Pass() {
 
   // Functions
   const onContinue = () => {
-    setCookie("guest", "true");
+    document.cookie = "guest=true";
     router.push("/");
   };
 

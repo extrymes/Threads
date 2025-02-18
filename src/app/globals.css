@@ -21,6 +21,11 @@
   @apply bg-threads-modal px-4 py-1 cursor-pointer hover:bg-threads-gray-dark duration-150;
 }
 
+/* User card */
+.user-card {
+  @apply bg-threads-gray-dark rounded-lg p-4 gap-5 flex hover:bg-opacity-80 duration-150 cursor-pointer;
+}
+
 /* Auth */
 .auth-method {
   @apply border rounded-3xl border-threads-gray-light p-5 bg-threads-gray hover:bg-gray-900 duration-150;

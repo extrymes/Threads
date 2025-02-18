@@ -1,19 +1,27 @@
 "use client";
 
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
+import UserCard from "@/components/UserCard/UserCard";
+import { User } from "@/types/User";
 import { isSimpleKey } from "@/utils/is-simple-key";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Search() {
-  // Variables
-  const inputRef = useRef<HTMLInputElement>(null);
+  // State management
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // References
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchTimeoutRef = useRef<NodeJS.Timeout>(null);
 
   // Side effects
   useEffect(() => {
     // Focus input when typing
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isSimpleKey(e) && document.activeElement !== inputRef.current)
-        inputRef.current?.focus();
+      if (isSimpleKey(e) && document.activeElement !== searchInputRef.current)
+        searchInputRef.current?.focus();
     };
 
     // Add event listeners on mounting
@@ -23,6 +31,32 @@ export default function Search() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Functions
+  const searchUsers = async (query: string) => {
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    if (query === "") return setUsers([]);
+    searchTimeoutRef.current = setTimeout(async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch("/api/user/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          if (res.status === 404) return setUsers([]);
+          return toast.error("Error occurred when trying to search users");
+        }
+        setUsers(data.users);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 300);
+  };
+
   // Render
   return (
     <ConnectedLayout>
@@ -30,17 +64,37 @@ export default function Search() {
         {/* Search */}
         <form>
           <input
-            ref={inputRef}
+            ref={searchInputRef}
             type="search"
             placeholder="Search"
             className="input"
+            onChange={(e) => searchUsers(e.target.value)}
           />
-
-          {/* Result */}
-          <div className="mt-32 text-threads-gray-light text-center">
-            Search for profiles to discover
-          </div>
         </form>
+        {/* Result */}
+        <div className="flex flex-col gap-5 mt-10">
+          {!searchInputRef.current?.value ? (
+            <div className="text-threads-gray-light text-center">
+              Search for profiles to discover
+            </div>
+          ) : isLoading ? (
+            <div className="text-threads-gray-light text-center">
+              <div className="loading loading-spinner loading-md">
+                Loading...
+              </div>
+            </div>
+          ) : users.length > 0 ? (
+            users.map((user) => (
+              <div key={user._id}>
+                <UserCard user={user} />
+              </div>
+            ))
+          ) : (
+            <div className="text-threads-gray-light text-center">
+              No user found :/
+            </div>
+          )}
+        </div>
       </div>
     </ConnectedLayout>
   );

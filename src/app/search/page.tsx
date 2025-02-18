@@ -62,7 +62,7 @@ export default function Search() {
     <ConnectedLayout>
       <div className="mt-10 md:w-[800px] mx-auto w-full">
         {/* Search */}
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <input
             ref={searchInputRef}
             type="search"

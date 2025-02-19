@@ -48,7 +48,7 @@ export default function Modal({
         document.body.style.overflow = "unset";
         document.removeEventListener("mousedown", handleMouseDown);
         document.removeEventListener("keydown", handleKeyDown);
-      }, 390);
+      }, 350);
     }
   }, [isOpen]);
 

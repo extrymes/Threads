@@ -48,7 +48,7 @@ export default function Profile() {
     });
     const data = await response.json();
     if (!response.ok) {
-      toast.error("Error occured when trying to fetch user");
+      toast.error("Error occurred when trying to fetch user");
       router.push("/");
       return;
     }
@@ -210,8 +210,8 @@ export default function Profile() {
               alt="Profile"
               width={100}
               height={100}
-              priority
               className="rounded-full object-cover aspect-square"
+              priority
               unoptimized
             />
           </div>

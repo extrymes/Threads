@@ -25,10 +25,10 @@ export default async function Index() {
       ...post,
       _id: post._id.toString(),
     }));
-    await client.close();
   } catch (e: any) {
-    if (client) await client.close();
     toast.error(e.message);
+  } finally {
+    if (client) await client.close();
   }
 
   // Render

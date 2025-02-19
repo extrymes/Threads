@@ -1,10 +1,22 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
-  const { theme, setTheme } = useTheme();
+  // Variables
+  const { resolvedTheme, setTheme } = useTheme();
 
+  // State management
+  const [mounted, setMounted] = useState(false);
+
+  // Side effects
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Render
+  if (!mounted) return null;
   return (
     <footer className="grid grid-cols-[auto_1fr_auto] z-30 px-4 pb-4 mt-10 items-center text-threads-gray-light">
       <div className="col-start-2 flex justify-center gap-10">
@@ -15,11 +27,12 @@ export default function Footer() {
       <div className="flex justify-end">
         <button
           className="hover:bg-gray-200 dark:hover:bg-threads-gray-dark rounded-full duration-150"
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
         >
-          {theme == "light" ? (
+          {resolvedTheme === "light" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              className="text-violet-500"
               width="1.8em"
               height="1.8em"
               viewBox="0 0 24 24"
@@ -32,6 +45,7 @@ export default function Footer() {
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              className="text-yellow-500"
               width="1.8em"
               height="1.8em"
               viewBox="0 0 24 24"

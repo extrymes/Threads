@@ -20,7 +20,7 @@ export default function ConnectedLayout({
   // Variables
   const { data: session } = useSession();
   const pathname = usePathname();
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   // State management
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -45,7 +45,7 @@ export default function ConnectedLayout({
               className={`w-10 h-10 hover:w-11 hover:h-11 hover:bg-gray-100 dark:hover:bg-threads-gray-dark duration-150 p-1 rounded-xl ${
                 pathname == "/"
                   ? `text-black dark:text-white`
-                  : `text-threads-gray-light`
+                  : `text-gray-400 dark:text-threads-gray-light`
               }`}
               width="1em"
               height="1em"
@@ -65,7 +65,7 @@ export default function ConnectedLayout({
               className={`w-10 h-10 hover:w-11 hover:h-11 hover:bg-gray-100 dark:hover:bg-threads-gray-dark duration-150 p-1 rounded-xl ${
                 pathname == "/search"
                   ? `text-black dark:text-white`
-                  : `text-threads-gray-light`
+                  : `text-gray-400 dark:text-threads-gray-light`
               }`}
               width="1em"
               height="1em"
@@ -98,7 +98,7 @@ export default function ConnectedLayout({
 
         {/* Logo */}
         <Image
-          src={theme === "dark" ? "/logo-white.png" : "/logo-black.png"}
+          src={resolvedTheme === "light" ? "/logo-black.png" : "/logo-white.png"}
           alt="Threads"
           priority
           width={40}

@@ -1,6 +1,6 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { MongoClient, ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";

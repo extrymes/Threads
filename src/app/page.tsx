@@ -4,7 +4,7 @@ import PostLayout from "@/components/PostLayout/PostLayout";
 import { MongoClient } from "mongodb";
 import { getServerSession } from "next-auth";
 import { toast } from "react-toastify";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "./api/auth/[...nextauth]/auth";
 
 export default async function Index() {
   // Variables

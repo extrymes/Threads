@@ -32,11 +32,11 @@ export default function Dropdown({
     if (isOpen) {
       document.addEventListener("mousedown", handleMouseDown);
       document.addEventListener("keydown", handleKeyDown);
-    } else {
+    }
+    return () => {
       document.removeEventListener("mousedown", handleMouseDown);
       document.removeEventListener("keydown", handleKeyDown);
-    }
-    return () => {};
+    };
   }, [isOpen]);
 
   // Functions

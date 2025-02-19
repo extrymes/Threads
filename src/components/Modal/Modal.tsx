@@ -46,10 +46,12 @@ export default function Modal({
         setIsClosing(false);
         setIsVisible(false);
         document.body.style.overflow = "unset";
-        document.removeEventListener("mousedown", handleMouseDown);
-        document.removeEventListener("keydown", handleKeyDown);
       }, 350);
     }
+    return () => {
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isOpen]);
 
   // Render

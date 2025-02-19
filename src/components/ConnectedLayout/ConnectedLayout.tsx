@@ -82,7 +82,7 @@ export default function ConnectedLayout({
           {session?.user && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-10 h-10 hover:w-11 hover:h-11 hover:bg-gray-100 dark:hover:bg-threads-gray-dark duration-150 p-1 rounded-xl text-threads-gray-light cursor-pointer"
+              className="w-10 h-10 hover:w-11 hover:h-11 hover:bg-gray-100 dark:hover:bg-threads-gray-dark duration-150 p-1 rounded-xl text-gray-400 dark:text-threads-gray-light cursor-pointer"
               width="1em"
               height="1em"
               viewBox="0 0 256 256"
@@ -98,7 +98,9 @@ export default function ConnectedLayout({
 
         {/* Logo */}
         <Image
-          src={resolvedTheme === "light" ? "/logo-black.png" : "/logo-white.png"}
+          src={
+            resolvedTheme === "light" ? "/logo-black.png" : "/logo-white.png"
+          }
           alt="Threads"
           priority
           width={40}

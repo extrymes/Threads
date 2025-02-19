@@ -3,8 +3,7 @@
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
 import UserCard from "@/components/UserCard/UserCard";
 import { User } from "@/types/User";
-import { isSimpleKey } from "@/utils/is-simple-key";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Search() {
@@ -15,21 +14,6 @@ export default function Search() {
   // References
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout>(null);
-
-  // Side effects
-  useEffect(() => {
-    // Focus input when typing
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (isSimpleKey(e) && document.activeElement !== searchInputRef.current)
-        searchInputRef.current?.focus();
-    };
-
-    // Add event listeners on mounting
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Remove event listeners on demounting
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   // Functions
   const searchUsers = async (query: string) => {

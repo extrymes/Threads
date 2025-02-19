@@ -1,10 +1,9 @@
 "use client";
 
 import { createPost } from "@/actions/create-post";
-import { isSimpleKey } from "@/utils/is-simple-key";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../Button/Button";
 

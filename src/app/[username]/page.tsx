@@ -198,7 +198,7 @@ export default function Profile() {
             </div>
             {user.url && (
               <div className="mt-5 text-blue-500 hover:text-blue-400 duration-150">
-                <a href={user.url}>{user.url}</a>
+                <a href={user.url} target="_blank">{user.url}</a>
               </div>
             )}
           </div>

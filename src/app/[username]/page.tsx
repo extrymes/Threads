@@ -184,7 +184,7 @@ export default function Profile() {
           </div>
         </div>
       </Modal>
-      <div className="md:w-[800px] w-full mx-auto mt-10 text-white">
+      <div className="md:w-[800px] w-full mx-auto mt-10">
         {/* Infos */}
         <div className="flex justify-between gap-4">
           {/* Data */}
@@ -227,17 +227,17 @@ export default function Profile() {
         {/* Tabs */}
         <div className="flex mt-10 mb-5 gap-4">
           {/* Threads */}
-          <div className="flex-1 px-4 text-center border-b text-white border-white pb-4 hover:text-white hover:border-white duration-150 cursor-pointer">
+          <div className="flex-1 px-4 text-center border-b border-black dark:border-white pb-4 hover:text-black dark:hover:text-white hover:border-black dark:hover:border-white duration-150 cursor-pointer">
             Threads
           </div>
 
           {/* Responses */}
-          <div className="flex-1 px-4 text-center border-b text-threads-gray-light border-threads-gray-light pb-4 hover:text-white hover:border-white duration-150 cursor-pointer">
+          <div className="flex-1 px-4 text-center border-b text-threads-gray-light dark:border-threads-gray-light pb-4 hover:text-black dark:hover:text-white hover:border-black dark:hover:border-white duration-150 cursor-pointer">
             Responses
           </div>
 
           {/* Reposts */}
-          <div className="flex-1 px-4 text-center border-b text-threads-gray-light border-threads-gray-light pb-4 hover:text-white hover:border-white duration-150 cursor-pointer">
+          <div className="flex-1 px-4 text-center border-b text-threads-gray-light dark:border-threads-gray-light pb-4 hover:text-black dark:hover:text-white hover:border-black dark:hover:border-white duration-150 cursor-pointer">
             Reposts
           </div>
         </div>

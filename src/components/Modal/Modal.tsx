@@ -46,8 +46,8 @@ export default function Modal({
         setIsClosing(false);
         setIsVisible(false);
         document.body.style.overflow = "unset";
-      document.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("mousedown", handleMouseDown);
+        document.removeEventListener("keydown", handleKeyDown);
       }, 390);
     }
   }, [isOpen]);
@@ -60,7 +60,7 @@ export default function Modal({
         className={`modal-foreground ${isClosing ? "slide-out" : "slide-in"}`}
         ref={modalRef}
       >
-        <header className="flex justify-between items-center text-xl text-white">
+        <header className="flex justify-between items-center text-xl">
           <div>{title}</div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ export default function Modal({
             ></path>
           </svg>
         </header>
-        <div className="border-t border-threads-gray-light my-5"></div>
+        <div className="border-t dark:border-threads-gray-light my-5"></div>
         <div>{children}</div>
       </div>
     </div>,

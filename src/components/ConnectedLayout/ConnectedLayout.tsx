@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,6 +20,7 @@ export default function ConnectedLayout({
   // Variables
   const { data: session } = useSession();
   const pathname = usePathname();
+  const { theme } = useTheme();
 
   // State management
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -40,8 +42,10 @@ export default function ConnectedLayout({
           <Link href="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`w-10 h-10 hover:w-11 hover:h-11 hover:bg-threads-gray-dark duration-150 p-1 rounded-xl ${
-                pathname == "/" ? `text-white` : `text-threads-gray-light`
+              className={`w-10 h-10 hover:w-11 hover:h-11 hover:bg-gray-100 dark:hover:bg-threads-gray-dark duration-150 p-1 rounded-xl ${
+                pathname == "/"
+                  ? `text-black dark:text-white`
+                  : `text-threads-gray-light`
               }`}
               width="1em"
               height="1em"
@@ -58,8 +62,10 @@ export default function ConnectedLayout({
           <Link href="/search">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`w-10 h-10 hover:w-11 hover:h-11 hover:bg-threads-gray-dark duration-150 p-1 rounded-xl ${
-                pathname == "/search" ? `text-white` : `text-threads-gray-light`
+              className={`w-10 h-10 hover:w-11 hover:h-11 hover:bg-gray-100 dark:hover:bg-threads-gray-dark duration-150 p-1 rounded-xl ${
+                pathname == "/search"
+                  ? `text-black dark:text-white`
+                  : `text-threads-gray-light`
               }`}
               width="1em"
               height="1em"
@@ -76,7 +82,7 @@ export default function ConnectedLayout({
           {session?.user && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-10 h-10 hover:w-11 hover:h-11 hover:bg-threads-gray-dark duration-150 p-1 rounded-xl text-threads-gray-light cursor-pointer"
+              className="w-10 h-10 hover:w-11 hover:h-11 hover:bg-gray-100 dark:hover:bg-threads-gray-dark duration-150 p-1 rounded-xl text-threads-gray-light cursor-pointer"
               width="1em"
               height="1em"
               viewBox="0 0 256 256"
@@ -91,7 +97,13 @@ export default function ConnectedLayout({
         </nav>
 
         {/* Logo */}
-        <Image src="/logo.png" alt="Threads" priority width={40} height={40} />
+        <Image
+          src={theme === "dark" ? "/logo-white.png" : "/logo-black.png"}
+          alt="Threads"
+          priority
+          width={40}
+          height={40}
+        />
 
         {/* Profile */}
         <div className="relative">
@@ -103,7 +115,7 @@ export default function ConnectedLayout({
               alt="Profile"
               width={60}
               height={60}
-              className="rounded-full object-cover aspect-square cursor-pointer border-4 border-transparent hover:border-threads-gray-light duration-150"
+              className="rounded-full object-cover aspect-square cursor-pointer border-4 border-transparent hover:border-gray-300 dark:hover:border-threads-gray-light duration-150"
               unoptimized
             ></Image>
           ) : (

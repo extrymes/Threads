@@ -37,7 +37,7 @@ export default async function Index() {
       <div className="md:w-[800px] w-full mx-auto mt-10">
         {/* New post */}
         {session?.user && (
-          <div className="border-b border-threads-gray-dark py-4 mb-2">
+          <div className="border-b dark:border-threads-gray-dark py-4 mb-2">
             <NewPostForm />
           </div>
         )}

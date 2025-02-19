@@ -82,7 +82,7 @@ export default function PostLayout({ post }: { post: Post }) {
       </div>
 
       {/* Post */}
-      <div className="text-white w-full min-w-0">
+      <div className="w-full min-w-0">
         <div className="flex justify-between text-center">
           {/* Username */}
           <Link href={`/@${post.username}`}>

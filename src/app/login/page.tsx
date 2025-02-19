@@ -4,15 +4,13 @@ export default function Login() {
   return (
     <div>
       {/* Title */}
-      <h1 className="title pt-[19vw]">
-        How do you want to use Threads?
-      </h1>
+      <h1 className="title pt-[19vw]">How do you want to use Threads?</h1>
 
       <div className="mt-5 w-[500px] mx-auto flex flex-col gap-4">
         {/* Sign up and sign in */}
         <Link href="/login/signin">
           <div className="auth-method">
-            <h2 className="font-bold text-white">
+            <h2 className="font-bold">
               Sign in with an email address or create an account
             </h2>
             <div className="text-threads-gray-light mt-4">
@@ -25,7 +23,7 @@ export default function Login() {
         {/* Invited */}
         <Link href="/login/pass">
           <div className="auth-method">
-            <h2 className="font-bold text-white">Continue as guest</h2>
+            <h2 className="font-bold">Continue as guest</h2>
             <div className="text-threads-gray-light mt-4">
               You can navigate on Threads without profile, but you cannot post
               and interact with content.

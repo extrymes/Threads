@@ -4,15 +4,15 @@
 
 /* Form  */
 .input {
-  @apply bg-threads-gray-dark block w-full mt-3 resize-none text-white rounded-xl p-5 placeholder:text-threads-gray-light focus:outline focus:outline-white;
+  @apply bg-gray-100 dark:bg-threads-gray-dark block w-full mt-3 resize-none rounded-xl p-5 placeholder:text-threads-gray-light focus:outline focus:outline-black dark:focus:outline-white;
 }
 .label {
-  @apply font-bold text-white text-base;
+  @apply font-bold text-base;
 }
 
 /* Post */
 .post {
-  @apply border-b border-threads-gray-dark hover:bg-threads-gray-dark hover:bg-opacity-80 duration-150 p-4 flex gap-5 rounded-lg;
+  @apply border-b dark:border-threads-gray-dark hover:bg-gray-100 dark:hover:bg-threads-gray-dark hover:bg-opacity-80 duration-150 p-4 flex gap-5 rounded-lg;
 }
 .options {
   @apply absolute top-5 right-0 z-10 bg-threads-modal border border-threads-gray-light overflow-hidden rounded-xl shadow;
@@ -23,30 +23,30 @@
 
 /* User card */
 .user-card {
-  @apply bg-threads-gray-dark rounded-lg p-4 gap-5 flex hover:bg-opacity-80 duration-150 cursor-pointer;
+  @apply bg-gray-100 dark:bg-threads-gray-dark rounded-lg p-4 gap-5 flex hover:bg-gray-200 dark:hover:bg-threads-modal duration-150 cursor-pointer;
 }
 
 /* Auth */
 .auth-method {
-  @apply border rounded-3xl border-threads-gray-light p-5 bg-threads-gray hover:bg-gray-900 duration-150;
+  @apply border rounded-3xl border-threads-gray-light p-5 hover:bg-gray-200 dark:hover:bg-gray-900 duration-150;
 }
 .title {
-  @apply text-center font-bold text-white text-xl;
+  @apply text-center font-bold text-xl;
 }
 
 /* User */
 .user-button {
-  @apply border border-threads-gray-light rounded-xl py-3 w-full text-center hover:bg-threads-gray-light duration-150 cursor-pointer mt-10;
+  @apply border dark:border-threads-gray-light rounded-xl py-3 w-full text-center hover:bg-gray-100 dark:hover:bg-threads-gray-light duration-150 cursor-pointer mt-10;
 }
 
 /* Dropdown menu */
 .dropdown-menu {
-  @apply absolute z-10 w-48 rounded-lg text-white text-sm font-bold bg-threads-modal;
+  @apply absolute z-10 w-48 rounded-lg text-sm font-bold bg-gray-200 dark:bg-threads-modal;
   ul {
     @apply p-2;
   }
   li {
-    @apply px-2 py-2 flex items-center justify-between rounded-md cursor-pointer hover:bg-threads-gray-light active:bg-opacity-80;
+    @apply px-2 py-2 flex items-center justify-between rounded-md cursor-pointer text-black dark:text-white hover:text-white hover:bg-gray-500 dark:hover:bg-threads-gray-light active:bg-opacity-80;
     svg {
       width: 1.4rem;
       height: 1.4rem;

@@ -18,7 +18,7 @@ export default function UserCard({ user }: { user: User }) {
         />
       </div>
       {/* User informations */}
-      <div className="text-white flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <div className="flex gap-2">
           <b>{user.name}</b>
           <p className="text-threads-gray-light">@{user.username}</p>

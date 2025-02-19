@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   if (invited) isAuthenticated = true;
 
   // Check if user is connected
-  const token = request.cookies.get("next-auth.session-token");
+  const token = request.cookies.get("__Secure-next-auth.session-token");
   if (token) isAuthenticated = true;
 
   // Check if isAuthenticated

@@ -15,7 +15,7 @@
   @apply border-b dark:border-threads-gray-dark hover:bg-gray-100 dark:hover:bg-threads-gray-dark hover:bg-opacity-80 duration-150 p-4 flex gap-5 rounded-lg;
 }
 .options {
-  @apply absolute top-5 right-0 z-10 bg-threads-modal border border-threads-gray-light overflow-hidden rounded-xl shadow;
+  @apply absolute top-5 right-0 bg-threads-modal border border-threads-gray-light overflow-hidden rounded-xl shadow;
 }
 .option {
   @apply bg-threads-modal px-4 py-1 cursor-pointer hover:bg-threads-gray-dark duration-150;

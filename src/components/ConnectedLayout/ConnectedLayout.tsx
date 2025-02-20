@@ -29,16 +29,16 @@ export default function ConnectedLayout({
 
   // Render
   return (
-    <section className="flex flex-col min-h-screen px-5">
+    <section className="flex flex-col min-h-screen">
       {/* New post modal */}
       <Modal title="New post" isOpen={isOpenModal} setIsOpen={setIsOpenModal}>
         <NewPostForm closeModal={() => setIsOpenModal(false)} />
       </Modal>
 
       {/* Header */}
-      <header className="flex justify-between items-center py-4">
+      <header className="flex justify-between items-center px-5 py-4 sticky top-0 bg-white dark:bg-threads-gray bg-opacity-60 dark:bg-opacity-60 backdrop-blur-sm z-20">
         {/* Nav */}
-        <nav className="absolute left-0 top-0 right-0 flex justify-center py-7 gap-5 z-0">
+        <nav className="absolute left-0 top-0 right-0 flex justify-center py-7 gap-5">
           {/* Home */}
           <Link href="/">
             <svg
@@ -162,7 +162,7 @@ export default function ConnectedLayout({
       </header>
 
       {/* Content */}
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 px-5">{children}</div>
 
       {/* Footer */}
       <Footer />

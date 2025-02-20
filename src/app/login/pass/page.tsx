@@ -16,7 +16,7 @@ export default function Pass() {
 
   // Render
   return (
-    <div className="w-[440px] mx-auto pt-[19vw]">
+    <div className="w-[440px] mx-auto pt-[19vw] px-5 sm:px-0">
       {/* Title */}
       <h1 className="title flex items-center gap-1">
         <Link href="/login">

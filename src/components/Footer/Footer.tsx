@@ -18,13 +18,11 @@ export default function Footer() {
   // Render
   if (!mounted) return null;
   return (
-    <footer className="grid grid-cols-[auto_1fr_auto] z-30 px-4 pb-4 mt-10 items-center text-threads-gray-light">
-      <div className="col-start-2 flex justify-center gap-10">
-        <div>© Threads</div>
-        <div>General terms and conditions</div>
-        <div>Privacy policy</div>
-      </div>
-      <div className="flex justify-end">
+    <footer className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-10 pb-4 mt-10 text-sm sm:text-base text-threads-gray-light">
+      <div>© Threads</div>
+      <div>General terms and conditions</div>
+      <div>Privacy policy</div>
+      <div className="fixed bottom-1 right-2">
         <button
           className="hover:bg-gray-200 dark:hover:bg-threads-gray-dark rounded-full duration-150"
           onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}

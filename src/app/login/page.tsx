@@ -4,9 +4,11 @@ export default function Login() {
   return (
     <div>
       {/* Title */}
-      <h1 className="title pt-[19vw]">How do you want to use Threads?</h1>
+      <h1 className="title pt-[19vw] px-4 text-center">
+        How do you want to use Threads?
+      </h1>
 
-      <div className="mt-5 w-[500px] mx-auto flex flex-col gap-4">
+      <div className="mt-5 w-full max-w-[500px] mx-auto flex flex-col gap-4 px-5 sm:px-0">
         {/* Sign up and sign in */}
         <Link href="/login/signin">
           <div className="auth-method">

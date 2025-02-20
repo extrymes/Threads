@@ -11,6 +11,7 @@ import Dropdown from "../Dropdown/Dropdown";
 import Footer from "../Footer/Footer";
 import Modal from "../Modal/Modal";
 import NewPostForm from "../NewPostForm/NewPostForm";
+import UserAvatar from "../UserAvatar/UserAvatar";
 
 export default function ConnectedLayout({
   children,
@@ -111,15 +112,13 @@ export default function ConnectedLayout({
         <div className="relative">
           {session?.user ? (
             // Profile avatar
-            <Image
-              onClick={() => setIsOpenDropdown((state) => !state)}
-              src={session.user.profile || "/avatar.jpg"}
-              alt="Profile"
+            <UserAvatar
+              src={session.user.profile}
               width={60}
               height={60}
-              className="rounded-full object-cover aspect-square cursor-pointer border-4 border-transparent hover:border-gray-300 dark:hover:border-threads-gray-light duration-150"
-              unoptimized
-            ></Image>
+              className="cursor-pointer border-4 border-transparent hover:border-gray-300 dark:hover:border-threads-gray-light duration-150"
+              onClick={() => setIsOpenDropdown((state) => !state)}
+            />
           ) : (
             // Login button
             <Link href="/login">

@@ -4,10 +4,10 @@ import Button from "@/components/Button/Button";
 import ConnectedLayout from "@/components/ConnectedLayout/ConnectedLayout";
 import Modal from "@/components/Modal/Modal";
 import PostLayout from "@/components/PostLayout/PostLayout";
+import UserAvatar from "@/components/UserAvatar/UserAvatar";
 import { Post } from "@/types/Post";
 import { User } from "@/types/User";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -130,14 +130,7 @@ export default function Profile() {
             ></input>
           </div>
           <div>
-            <Image
-              src={profileInput || "./avatar.jpg"}
-              alt="Profile"
-              width={100}
-              height={100}
-              className="rounded-full object-cover aspect-square"
-              unoptimized
-            ></Image>
+            <UserAvatar src={profileInput} width={100} height={100} />
           </div>
         </div>
 
@@ -198,22 +191,16 @@ export default function Profile() {
             </div>
             {user.url && (
               <div className="mt-5 text-blue-500 hover:text-blue-400 duration-150">
-                <a href={user.url} target="_blank">{user.url}</a>
+                <a href={user.url} target="_blank">
+                  {user.url}
+                </a>
               </div>
             )}
           </div>
 
           {/* Profile avatar */}
           <div className="shrink-0">
-            <Image
-              src={user.profile || "/avatar.jpg"}
-              alt="Profile"
-              width={100}
-              height={100}
-              className="rounded-full object-cover aspect-square"
-              priority
-              unoptimized
-            />
+            <UserAvatar src={user.profile} width={100} height={100} />
           </div>
         </div>
 

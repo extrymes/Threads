@@ -2,10 +2,10 @@
 
 import { createPost } from "@/actions/create-post";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../Button/Button";
+import UserAvatar from "../UserAvatar/UserAvatar";
 
 export default function NewPostForm({
   closeModal,
@@ -53,14 +53,7 @@ export default function NewPostForm({
       <div className="flex gap-3 w-full">
         {/* Profile avatar */}
         <div>
-          <Image
-            src={session?.user.profile || "/avatar.jpg"}
-            alt="Profile"
-            width={50}
-            height={50}
-            className="rounded-full object-cover aspect-square mt-5"
-            unoptimized
-          ></Image>
+          <UserAvatar src={session?.user.profile} width={50} height={50} />
         </div>
 
         {/* Input */}

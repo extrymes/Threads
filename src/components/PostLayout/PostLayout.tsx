@@ -5,11 +5,11 @@ import { editPost } from "@/actions/edit-post";
 import { Post } from "@/types/Post";
 import moment from "moment-timezone";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Dropdown from "../Dropdown/Dropdown";
+import UserAvatar from "../UserAvatar/UserAvatar";
 
 export default function PostLayout({ post }: { post: Post }) {
   // Variables
@@ -71,14 +71,7 @@ export default function PostLayout({ post }: { post: Post }) {
     <div className="post">
       {/* User avatar */}
       <div className="shrink-0">
-        <Image
-          src={post.profile}
-          alt="User"
-          width={50}
-          height={50}
-          className="rounded-full object-cover aspect-square"
-          unoptimized
-        />
+        <UserAvatar src={post.profile} width={50} height={50} />
       </div>
 
       {/* Post */}

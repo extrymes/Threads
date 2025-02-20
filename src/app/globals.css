@@ -46,7 +46,7 @@
     @apply p-2;
   }
   li {
-    @apply px-2 py-2 flex items-center justify-between rounded-md cursor-pointer text-black dark:text-white hover:text-white hover:bg-gray-500 dark:hover:bg-threads-gray-light active:bg-opacity-80;
+    @apply px-2 py-2 flex items-center justify-between rounded-md cursor-pointer text-black dark:text-white hover:text-white hover:bg-threads-gray-light active:bg-opacity-80 dark:active:bg-opacity-80;
     svg {
       width: 1.4rem;
       height: 1.4rem;

@@ -23,6 +23,7 @@ export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [nameInput, setNameInput] = useState("");
   const [profileInput, setProfileInput] = useState("");
   const [bioInput, setBioInput] = useState("");
   const [linkInput, setLinkInput] = useState("");
@@ -57,6 +58,7 @@ export default function Profile() {
   };
   if (!user || !posts) return;
   const openProfileEditionModal = () => {
+    setNameInput(user.name);
     setProfileInput(user.profile);
     setBioInput(user.bio);
     setLinkInput(user.url);
@@ -64,6 +66,7 @@ export default function Profile() {
   };
   const checkForChanges = (): boolean => {
     return (
+      user.name !== nameInput ||
       user.profile !== profileInput ||
       user.bio !== bioInput ||
       user.url !== linkInput
@@ -81,6 +84,7 @@ export default function Profile() {
       },
       body: JSON.stringify({
         username,
+        name: nameInput,
         profile: profileInput,
         bio: finalBio,
         url: linkInput,
@@ -94,6 +98,7 @@ export default function Profile() {
     }
     const newUser = {
       ...user,
+      name: nameInput,
       profile: profileInput,
       bio: finalBio,
       url: linkInput,
@@ -113,8 +118,23 @@ export default function Profile() {
         isOpen={isOpenModal}
         setIsOpen={setIsOpenModal}
       >
+        {/* Name */}
+        <div>
+          <label className="label" htmlFor="bio">
+            Name
+          </label>
+          <input
+            className="input"
+            id="name"
+            name="name"
+            placeholder="Wumpus"
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+          ></input>
+        </div>
+
         {/* Profile avatar */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-5">
           <div className="flex-1">
             <label className="label" htmlFor="picture">
               Profile avatar

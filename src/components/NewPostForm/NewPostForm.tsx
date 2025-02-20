@@ -53,7 +53,12 @@ export default function NewPostForm({
       <div className="flex gap-3 w-full">
         {/* Profile avatar */}
         <div>
-          <UserAvatar src={session?.user.profile} width={50} height={50} />
+          <UserAvatar
+            src={session?.user.profile}
+            width={50}
+            height={50}
+            className="mt-5"
+          />
         </div>
 
         {/* Input */}

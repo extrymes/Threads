@@ -8,15 +8,15 @@ export default function Footer() {
   const { resolvedTheme, setTheme } = useTheme();
 
   // State management
-  const [mounted, setMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Side effects
   useEffect(() => {
-    setMounted(true);
+    setIsMounted(true);
   }, []);
 
   // Render
-  if (!mounted) return null;
+  if (!isMounted) return null;
   return (
     <footer className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-10 pb-4 mt-10 text-sm sm:text-base text-threads-gray-light">
       <div>© Threads</div>

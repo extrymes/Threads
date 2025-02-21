@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 import Footer from "../Footer/Footer";
@@ -24,10 +24,17 @@ export default function ConnectedLayout({
   const { resolvedTheme } = useTheme();
 
   // State management
+  const [isMounted, setIsMounted] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
+  // Side effects
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Render
+  if (!isMounted) return null;
   return (
     <section className="flex flex-col min-h-screen">
       {/* New post modal */}

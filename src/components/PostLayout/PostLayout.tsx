@@ -71,7 +71,7 @@ export default function PostLayout({ post }: { post: Post }) {
     <div className="post">
       {/* User avatar */}
       <div className="shrink-0">
-        <UserAvatar src={post.profile} width={50} height={50} />
+        <UserAvatar src={post.profile} width={50} height={50} priority />
       </div>
 
       {/* Post */}

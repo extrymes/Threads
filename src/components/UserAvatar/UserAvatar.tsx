@@ -6,12 +6,14 @@ export default function UserAvatar({
   height,
   className,
   onClick,
+  priority,
 }: {
   src: string;
   width: number;
   height: number;
   className?: string;
   onClick?: () => void;
+  priority?: boolean
 }) {
   return (
     <Image
@@ -21,6 +23,7 @@ export default function UserAvatar({
       height={height}
       className={`rounded-full object-cover aspect-square ${className}`}
       onClick={onClick}
+      priority={priority}
       unoptimized
       onError={(e) => {
         const target = e.target as HTMLImageElement;

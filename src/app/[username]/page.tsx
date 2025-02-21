@@ -220,7 +220,7 @@ export default function Profile() {
 
           {/* Profile avatar */}
           <div className="shrink-0">
-            <UserAvatar src={user.profile} width={100} height={100} />
+            <UserAvatar src={user.profile} width={100} height={100} priority />
           </div>
         </div>
 

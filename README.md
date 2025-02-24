@@ -6,13 +6,13 @@ I recreated the Threads application to improve my web development skills, partic
 
 ## ⚒️ Tech Stack
 
-- For the frontend, I used **Tailwind CSS** for styling and **next-themes** for dark mode support.
+- For the frontend, I used **React** and **Next.js** to build a dynamic server-rendered application, with **Tailwind CSS** for styling and **next-themes** for dark mode support.
 - For authentication, I integrated **next-auth** to handle user sign-ins securely.
 - For the database, I chose **MongoDB**, and I used **bcrypt** to encrypt passwords.
 - To enhance user experience, I implemented **react-toastify** for notifications.
 - The entire project is written in **TypeScript** for better type safety and maintainability.
 
-## 🚀 Getting started
+## 🚀 Getting Started
 
 Make sure you have [Node.js](https://nodejs.org/en/download) v18.18 or later installed.
 
@@ -42,7 +42,7 @@ npm run build
 npm start
 ```
 
-## 🔑 Environment variables
+## 🔑 Environment Variables
 
 These keys are necessary for the project and must be declared as environment variables in the `.env` file.
 
@@ -72,3 +72,9 @@ These keys are necessary for the project and must be declared as environment var
         </tr>
     </tbody>
 </table>
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+This project is released under the [MIT License](https://github.com/extrymes/Threads/blob/main/LICENSE).
